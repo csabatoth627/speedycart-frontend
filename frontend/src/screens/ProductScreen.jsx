@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ListGroup,
@@ -11,12 +12,22 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import products from "../products";
+import axios from "axios";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
-  const product = products.find((p) => p._id === productId);
-  console.log(product);
+  const [product, setProduct] = useState({});
+
+
+  useEffect(() => {
+    const fetchproduct = async () => {
+      const {data} = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    };
+
+    fetchproduct();
+  },[productId]);
+  
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -25,8 +36,8 @@ const ProductScreen = () => {
 
       <Row>
         <Col md={5}>
-          <Image src={product.image} alt={product.name} fluid />
-        </Col>
+{          <Image src={product.image} alt={product.name} fluid />
+}        </Col>
         <Col md={4}>
           <ListGroup variant="flush">
             <ListGroupItem>
