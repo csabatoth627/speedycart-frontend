@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +7,7 @@ import {
   Row,
   Col,
   Image,
+  Form,
   Card,
   Button,
   ListGroupItem,
@@ -16,6 +18,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 
 const ProductScreen = () => {
+  const[ qty, setQty ] = useState(1);
   const { id: productId } = useParams();
   const {
     data: product,
@@ -78,6 +81,28 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroupItem>
+                  {product.countInStock > 0 && (
+                    <ListGroupItem>
+                      <Row>
+                        <Col>Qty</Col>
+                        <Col>
+                          <Form.Control
+                            as="select"
+                            value={qty}
+                            onChange={(e) => setQty(Number(e.target.value))}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (num) => (
+                                <option key={num + 1} value={num + 1}>
+                                  {num + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  )}
                   <ListGroupItem>
                     <Button
                       className="btn-block"
