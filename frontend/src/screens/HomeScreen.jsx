@@ -9,7 +9,7 @@ const HomeScreen = () => {
   return (
     <>
       {error ? (
-        <>{error.data.message || error}</>
+        <>{error?.data?.message || error.error}</>
       ) : isLoading ? (
         <>Loading...</>
       ) : products ? (
