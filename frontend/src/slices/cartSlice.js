@@ -19,8 +19,9 @@ const cartSlice = createSlice({
             } else {
                 state.cartItems = [...state.cartItems, newItem]
             }
+            state.cartItems.map((item) => console.log(item.price))
             //Calculate items price
-            state.itemsPrice = addDecimals(state.cartItems.reduce((acc, item) => acc + item.price * item.qty))
+            state.itemsPrice = addDecimals(state.cartItems.reduce((acc, item) => acc + item.price * item.qty,0))
             //Calculate shipping price
             state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10);
             //Calculate tax price
