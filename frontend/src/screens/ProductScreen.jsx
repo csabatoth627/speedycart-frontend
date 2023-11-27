@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { useGetProductDetailsQuery } from "../slices/productApiSlice";
+import Loading from "../components/Loading";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -29,7 +30,7 @@ const ProductScreen = () => {
       {error ? (
         <>{error?.data?.message || error.error}</>
       ) : isLoading ? (
-        <>Loading...</>
+        <Loading/>
       ) : product ? (
         <>
           <Row>
