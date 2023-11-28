@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../slices/cartSlice";
+import { addItemToCart,removeItemFromCart } from "../slices/cartSlice";
 import {
   ListGroup,
   Row,
@@ -22,6 +22,10 @@ const CartScreen = () => {
   const addToCartHandler = async (product, qty) => {
     dispatch(addItemToCart({ ...product, qty }));
   };
+
+  const removeFromCartHandler = async(id) => {
+     dispatch(removeItemFromCart(id))
+  }
 
   return (
     <Row>
@@ -64,7 +68,7 @@ const CartScreen = () => {
                     </Form.Control>
                   </Col>
                   <Col md={2}>
-                    <Button type="button" variant="danger">
+                    <Button type="button" variant="danger" onClick={() =>{removeFromCartHandler(item._id)}}>
                       <FaTrash />
                     </Button>
                   </Col>
