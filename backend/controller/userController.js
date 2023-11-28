@@ -74,7 +74,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
-    res.send('Update user profile')
+    const user = await User.findById(req.user._id);
+
+    if (user){
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+
+        if(req.body.password){
+            user.password = req.body.password
+        };
+    
+        const updateUser = await user.save();
+    
+        res.status(200).json({
+            _id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+        });
+    } else {
+        res.status(404)
+        throw new Error('User not Found')
+    }
+
+  
+
 });
 
 const getUsers = asyncHandler(async (req, res) => {
