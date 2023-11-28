@@ -7,7 +7,7 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email })
 
     if (user && (await user.checkPassword(password))) {
-        const token = jwt.sign({ id: 7, role: "captain" }, process.env.JWT_SECRET);
+        const token = jwt.sign({ userId:user._id }, process.env.JWT_SECRET);
 
         return res
             .cookie("jwt", token, {
@@ -50,6 +50,10 @@ const getUserByID = asyncHandler(async (req, res) => {
     res.send('Get user by id')
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+    res.send('Update user')
+});
+
 export {
     authUser,
     registerUser,
@@ -58,5 +62,6 @@ export {
     getUserProfile,
     getUsers,
     deleteUser,
-    getUserByID
+    getUserByID,
+    updateUser
 }

@@ -8,13 +8,15 @@ import {
     getUserProfile,
     getUsers,
     deleteUser,
-    getUserByID
+    getUserByID,
+    updateUser
 } from '../controller/userController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
-router.route('/').get(getUsers).post(registerUser);
+router.route('/').get(protect, admin, getUsers).post(registerUser);
 router.post('/logout', logoutUser);
 router.post('/login', authUser);
-router.route('/profile').get(getUserProfile).put(updateUserProfile);
-router.route('/:id').get(getUserByID).delete(deleteUser);
+router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile);
+router.route('/:id').get(protect, admin, getUserByID).delete(protect, admin, deleteUser).put(protect,admin, updateUser);
 
 export default router;
