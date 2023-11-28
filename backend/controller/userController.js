@@ -32,3 +32,14 @@ const deleteUser = asyncHandler(async (req, res) => {
 const getUserByID = asyncHandler(async (req, res) => {
     res.send('Get user by id')
 });
+
+export {
+    authUser,
+    registerUser,
+    logoutUser,
+    updateUserProfile,
+    getUserProfile,
+    getUsers,
+    deleteUser,
+    getUserByID
+}
