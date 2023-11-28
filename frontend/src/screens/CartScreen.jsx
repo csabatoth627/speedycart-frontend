@@ -72,6 +72,11 @@ const CartScreen = () => {
               </h2>
               $ ({cartItems.reduce((acc,item) => acc + item.qty * item.price,0).toFixed(2)})
             </ListGroupItem>
+            <ListGroupItem>
+                <Button type="button" variant="primary">
+                        Proceed To Checkout
+                </Button>
+            </ListGroupItem>
           </ListGroup>
         </Card>
       </Col>
