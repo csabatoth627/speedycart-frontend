@@ -39,6 +39,21 @@ const CartScreen = () => {
                         <Col md={2}>
                             ${item.price}
                         </Col>
+                        <Col md={2}>
+                        <Form.Control
+                            as="select"
+                            value={item.qty}
+                            onChange={(e) => {}}
+                          >
+                            {[...Array(item.countInStock).keys()].map(
+                              (num) => (
+                                <option key={num + 1} value={num + 1}>
+                                  {num + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        </Col>
                     </Row>
                 </ListGroupItem>
             ))}
