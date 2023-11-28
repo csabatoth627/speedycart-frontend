@@ -1,5 +1,4 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import User from "../models/userModel"
 
 const authUser = asyncHandler(async (req, res) => {
     res.send('Authenticate user')
