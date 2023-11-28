@@ -2,7 +2,7 @@ import React from "react";
 import { addItemToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   ListGroup,
@@ -22,6 +22,7 @@ import Message from "../components/Message";
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const { id: productId } = useParams();
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     data: product,
@@ -31,6 +32,7 @@ const ProductScreen = () => {
   
   const addToCartHandler = () => {
       dispatch(addItemToCart({...product,qty}))
+      navigate("/cart")
   }
 
   return (
