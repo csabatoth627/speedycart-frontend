@@ -3,10 +3,27 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { useDispatch } from "react-redux";
+import { logout } from "../slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const [logoutApiCall] = useLogoutMutation()
+
+  const logoutHandler = async () =>{
+    try{
+      logoutApiCall().unwrap();
+      dispatch(logout())
+      navigate('/login')
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <header>
@@ -35,7 +52,7 @@ const Header = () => {
                     Profile
                   </NavDropdown.Item>
                   </LinkContainer>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item onClick={logoutHandler}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
