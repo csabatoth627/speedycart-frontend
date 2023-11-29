@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart,removeItemFromCart } from "../slices/cartSlice";
 import {
@@ -14,10 +14,12 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import { FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CartScreen = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const addToCartHandler = async (product, qty) => {
     dispatch(addItemToCart({ ...product, qty }));
@@ -26,6 +28,10 @@ const CartScreen = () => {
   const removeFromCartHandler = async(id) => {
      dispatch(removeItemFromCart(id))
   }
+
+  const checkoutHandler = () => {
+    navigate('/login?redirect=/shipping');
+  };
 
   return (
     <Row>
@@ -93,7 +99,12 @@ const CartScreen = () => {
               )
             </ListGroupItem>
             <ListGroupItem>
-              <Button type="button" variant="primary">
+            <Button
+                type='button'
+                className='btn-block'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
                 Proceed To Checkout
               </Button>
             </ListGroupItem>
