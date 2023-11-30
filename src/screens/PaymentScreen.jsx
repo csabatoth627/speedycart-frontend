@@ -22,7 +22,7 @@ const PaymentScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePayment({ paymentMethod }));
-    navigate("/payment");
+    navigate("/placeorder");
   };
 
   return (
