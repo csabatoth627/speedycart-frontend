@@ -8,13 +8,13 @@ import { Form, Button } from "react-bootstrap";
 import CheckoutSteps from "../components/CheckoutSteps";
 
 const ShippingScreen = () => {
-  const { shippingAdress } = useSelector((state) => state.cart);
-  const [address, setAddress] = useState(shippingAdress?.address || "");
-  const [city, setCity] = useState(shippingAdress?.city || "");
+  const { shippingAddress  } = useSelector((state) => state.cart);
+  const [address, setAddress] = useState(shippingAddress?.address || "");
+  const [city, setCity] = useState(shippingAddress?.city || "");
   const [postalCode, setPostalCode] = useState(
-    shippingAdress?.postalCode || ""
+    shippingAddress?.postalCode || ""
   );
-  const [country, setCountry] = useState(shippingAdress?.country || "");
+  const [country, setCountry] = useState(shippingAddress?.country || "");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
