@@ -4,14 +4,13 @@ import { useParams } from "react-router-dom";
 import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery } from "../slices/orderApiSlice";
 import { Button, Row, Col, Image, ListGroup, Card } from "react-bootstrap";
 import {toast} from 'react-toastify'
-import { useSelector } from "react-redux";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-  const { data: order, isLoading, error } = useGetOrderDetailsQuery(orderId);
+  const { data: order,refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, {isLoading: payLoading}] = usePayOrderMutation();
 
@@ -19,7 +18,6 @@ const OrderScreen = () => {
 
   const {data: paypal, isLoading: loadingPayPal, error: errorPayPal} = useGetPayPalClientIdQuery();
 
-  const  {userInfo} = useSelector((state) => state.auth);
 
   useEffect(() => {
     if(!errorPayPal && !loadingPayPal && paypal.clientId){
@@ -41,7 +39,7 @@ const OrderScreen = () => {
     }
   },[errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
 
-  /* function onApprove(data, actions) {
+  function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         await payOrder({ orderId, details });
@@ -51,11 +49,13 @@ const OrderScreen = () => {
         toast.error(err?.data?.message || err.error);
       }
     });
-  } */
+  }
 
-  // TESTING ONLY! REMOVE BEFORE PRODUCTION
-  const onApproveTest = async() => {
-    await payOrder({oderId:"656b3fedc4aaf4e0ba5cc20e" , details: "656b3fedc4aaf4e0ba5cc20e"})
+   async function onApproveTest() {
+    await payOrder({ orderId, details: { payer: {} } });
+    refetch();
+
+    toast.success('Order is paid');
    }
 
   function onError(err) {
@@ -210,8 +210,8 @@ const OrderScreen = () => {
                       <div>
                         <PayPalButtons
                           createOrder={createOrder}
-/*                           onApprove={onApprove}
- */                          onError={onError}
+                          onApprove={onApprove}
+                          onError={onError}
                         ></PayPalButtons>
                       </div>
                     </div>
