@@ -19,6 +19,11 @@ const ProfileScreen = () => {
     }
   }, [userInfo]);
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log('submitHandler');
+  }
+
   return <div>ProfileScreen</div>;
 };
 
