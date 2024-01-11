@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const ProfileScreen = () => {
-  return (
-    <div>ProfileScreen</div>
-  )
-}
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-export default ProfileScreen
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      setName(userInfo.name);
+      setEmail(userInfo.email);
+      
+    }
+  }, [userInfo]);
+
+  return <div>ProfileScreen</div>;
+};
+
+export default ProfileScreen;
