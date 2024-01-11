@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 import { toast } from "react-toastify";
 import { useGetMyOrdersQuery } from "../slices/orderApiSlice";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -140,6 +141,13 @@ const ProfileScreen = () => {
                     ) : (
                       <FaTimes style={{ color: "red" }} />
                     )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        Details
+                      </Button>
+                    </LinkContainer>
                   </td>
                 </tr>
               ))}
