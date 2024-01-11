@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useProfileMutation } from "../slices/userApiSlice";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import Loading from "../components/Loading";
+import { toast } from "react-toastify";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -11,6 +14,8 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  const [updateProfile, {isLoading: loadingUpdateProfile}] = useProfileMutation()
 
   useEffect(() => {
     if (userInfo) {
@@ -70,7 +75,7 @@ const ProfileScreen = () => {
             />
           </Form.Group>
           <Button type="submit" variant="primary" className="my-2">Update</Button>
-          
+          {loadingUpdateProfile && <Loading/>}
         </Form>
       </Col>
       <Col md={9}>Column</Col>
