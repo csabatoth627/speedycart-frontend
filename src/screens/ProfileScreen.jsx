@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useProfileMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import Loading from "../components/Loading";
+import Message from "../components/Message";
 import { toast } from "react-toastify";
+import { useGetMyOrdersQuery } from "../slices/orderApiSlice";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -18,6 +20,8 @@ const ProfileScreen = () => {
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
+
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   useEffect(() => {
     if (userInfo) {
@@ -38,10 +42,10 @@ const ProfileScreen = () => {
           email,
           password,
         }).unwrap();
-        dispatch(setCredentials(res))
-        toast.success('Profile updated successfully')
+        dispatch(setCredentials(res));
+        toast.success("Profile updated successfully");
       } catch (err) {
-        toast.error(err?.data?.message || err.error)
+        toast.error(err?.data?.message || err.error);
       }
     }
   };
@@ -97,7 +101,18 @@ const ProfileScreen = () => {
           {loadingUpdateProfile && <Loading />}
         </Form>
       </Col>
-      <Col md={9}>Column</Col>
+      <Col md={9}>
+        <h2>My Orders</h2>
+        {isLoading ? (
+          <Loading />
+        ) : error ? (
+          <Message variant="danger">
+            {error?.data?.message || error.error}
+          </Message>
+        ) : (
+          <Table></Table>
+        )}
+      </Col>
     </Row>
   );
 };
