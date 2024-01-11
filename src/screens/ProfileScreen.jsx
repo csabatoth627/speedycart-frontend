@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -69,7 +69,7 @@ const ProfileScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-
+          <Button type="submit" variant="primary" className="my-2">Update</Button>
           
         </Form>
       </Col>
