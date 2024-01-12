@@ -16,7 +16,15 @@ const OrderListScreen = () => {
         <Message variant="danger">{error}</Message>
       ) : (
         <Table striped bordered hover responsive className="table-sm">
-          
+          <thead>
+            <tr></tr>
+            <th>ID</th>
+            <th>USER</th>
+            <th>DATE</th>
+            <th>TOTAL</th>
+            <th>PAID</th>
+            <th>DELIVERED</th>
+          </thead>
         </Table>
       )}
     </>
