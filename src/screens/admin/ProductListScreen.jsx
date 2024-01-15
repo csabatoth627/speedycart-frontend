@@ -21,6 +21,7 @@ const ProductListScreen = () => {
             </Button>
         </Col>
       </Row>
+      {isLoading ? <Loading/> : error ? <Message variant='danger'>{error}</Message> : (<></>)}
     </>
   );
 };
