@@ -1,13 +1,17 @@
 import React from "react";
 import { useGetProductsQuery } from "../../slices/productApiSlice";
 import { Table, Button, Row, Col } from "react-bootstrap";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { LinkContainer } from "react-router-bootstrap";
 
 const ProductListScreen = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
+
+  const deleteHandler = (id) => {
+    console.log(id);
+  }
 
   return (
     <>
@@ -53,6 +57,9 @@ const ProductListScreen = () => {
                             <FaEdit/>
                         </Button>
                     </LinkContainer>
+                    <Button variant="danger" className="btn-sm" onClick={() => deleteHandler(product._id)}>
+                    <FaTrash style={{color: "white"}}/>
+                    </Button>
                     </td>
                 </tr>
               ))}
