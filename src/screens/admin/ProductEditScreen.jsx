@@ -8,6 +8,8 @@ import FormContainer from "../../components/FormContainer";
 import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { Button, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -20,6 +22,8 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
+  const navigate = useNavigate()
+
   const {
     data: product,
     isLoading,
@@ -29,6 +33,7 @@ const ProductEditScreen = () => {
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
+
 
   useEffect(() => {
     if (product) {
@@ -41,6 +46,29 @@ const ProductEditScreen = () => {
       setDescription(product.description);
     }
   }, [product]);
+
+  const submitHandler = async(e) => {
+    e.preventDefault();
+    const updatedProduct = {
+        productId,
+        name,
+        price,
+        image,
+        brand,
+        category,
+        countInStock,
+        description,
+    }
+
+    const result = await updateProduct(updatedProduct)
+    if (result.error){
+        toast.error(result.error)
+    } else {
+        toast.success('Product updated')
+        navigate('/admin/productlist')
+        
+    }
+  }
 
   return (
     <>
@@ -55,7 +83,7 @@ const ProductEditScreen = () => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form>
+          <Form onSubmit={submitHandler}>
             <Form.Group controlId="name" className="my-2">
               <Form.Label>Name</Form.Label>
               <Form.Control
