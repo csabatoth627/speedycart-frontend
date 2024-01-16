@@ -34,9 +34,9 @@ export const productApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: UPLOAD_URL,
         method: 'POST',
-        body: data
+        body: data,
       }),
-    })
+    }),
   }),
 });
 

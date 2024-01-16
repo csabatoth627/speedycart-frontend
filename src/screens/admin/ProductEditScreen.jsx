@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-  useUploadProductImageMutation
+  useUploadProductImageMutation,
 } from "../../slices/productApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
@@ -10,7 +10,6 @@ import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -23,7 +22,7 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     data: product,
@@ -35,8 +34,8 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-    const [uploadProductImage , {isLoading: loadingUpload}] = useUploadProductImageMutation()
-
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
 
   useEffect(() => {
     if (product) {
@@ -50,28 +49,40 @@ const ProductEditScreen = () => {
     }
   }, [product]);
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const updatedProduct = {
-        productId,
-        name,
-        price,
-        image,
-        brand,
-        category,
-        countInStock,
-        description,
-    }
+      productId,
+      name,
+      price,
+      image,
+      brand,
+      category,
+      countInStock,
+      description,
+    };
 
-    const result = await updateProduct(updatedProduct)
-    if (result.error){
-        toast.error(result.error)
+    const result = await updateProduct(updatedProduct);
+    if (result.error) {
+      toast.error(result.error);
     } else {
-        toast.success('Product updated')
-        navigate('/admin/productlist')
-        
+      toast.success("Product updated");
+      refetch();
+      navigate("/admin/productlist");
     }
-  }
+  };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <>
@@ -107,7 +118,21 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            {/* IMAGE INPUT PLACEHOLDER */}
+            <Form.Group controlId="image" className="my-2">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter image url"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              ></Form.Control>
+              <Form.Control
+                type="file"
+                label="Choose file"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {loadingUpload && <Loading />}
+            </Form.Group>
 
             <Form.Group controlId="brand" className="my-2">
               <Form.Label>Brand</Form.Label>
