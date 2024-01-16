@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetProductDetailsQuery } from "../../slices/productApiSlice";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -34,7 +34,11 @@ const ProductEditScreen = () => {
   }, [product]);
 
   
-  return <div>ProductEditScreen</div>;
+  return <>
+  <Link to="/admin/productlist" className="btn btn-light my-3">
+    Go Back
+  </Link>
+  </>;
 };
 
 export default ProductEditScreen;
