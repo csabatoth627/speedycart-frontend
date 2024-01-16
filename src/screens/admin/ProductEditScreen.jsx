@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
+  useUploadProductImageMutation
 } from "../../slices/productApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
@@ -33,6 +34,8 @@ const ProductEditScreen = () => {
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
+
+    const [uploadProductImage , {isLoading: loadingUpload}] = useUploadProductImageMutation()
 
 
   useEffect(() => {
