@@ -22,6 +22,7 @@ const ProductListScreen = () => {
     if(window.confirm('Are you sure?')){
       try {
         await deleteProduct(id);
+        toast.success('Product deleted')
         refetch()
       } catch (err) {
         toast.error(err?.data?.message || err.error)
@@ -33,6 +34,7 @@ const ProductListScreen = () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
       try {
         await createProduct();
+        toast.success('Product created')
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error)
