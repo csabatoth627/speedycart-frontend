@@ -9,7 +9,9 @@ import { LinkContainer } from "react-router-bootstrap";
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
-  const deleteHandler = (id) => {};
+  const deleteHandler = (id) => {
+    console.log(id);
+  };
   return (
     <>
       <h1>Users</h1>
