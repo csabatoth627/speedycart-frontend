@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetUserDetailsQuery } from "../../slices/userApiSlice";
+import { useGetUserDetailsQuery, useUpdateUserMutation } from "../../slices/userApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
 import Loading from "../../components/Loading";
@@ -19,6 +19,10 @@ const UserEditScreen = () => {
     refetch,
     error,
   } = useGetUserDetailsQuery(userId);
+
+  const [updateUser, { isLoading: loadingUpdate }] =
+    useUpdateUserMutation()
+
 
   useEffect(() => {
     if (user) {
@@ -77,7 +81,7 @@ const UserEditScreen = () => {
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>
-            
+
           </Form>
         )}
       </FormContainer>
