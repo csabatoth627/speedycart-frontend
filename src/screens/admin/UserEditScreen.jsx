@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGetUserDetailsQuery } from "../../slices/userApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
@@ -8,6 +8,10 @@ import { Button, Form } from "react-bootstrap";
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("")
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const {
     data: user,
