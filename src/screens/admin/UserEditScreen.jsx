@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useGetUserDetailsQuery, useUpdateUserMutation } from "../../slices/userApiSlice";
+import {
+  useGetUserDetailsQuery,
+  useUpdateUserMutation,
+} from "../../slices/userApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
 import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { Button, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -16,13 +19,26 @@ const UserEditScreen = () => {
   const {
     data: user,
     isLoading,
-    refetch,
     error,
+    refetch,
   } = useGetUserDetailsQuery(userId);
 
-  const [updateUser, { isLoading: loadingUpdate }] =
-    useUpdateUserMutation()
+  const [updateUser, { isLoading: loadingUpdate }] = useUpdateUserMutation();
 
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    const result = await updateUser({ userId, name, email, isAdmin });
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("User updated");
+      refetch();
+      navigate("/admin/userlist");
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -32,17 +48,14 @@ const UserEditScreen = () => {
     }
   }, [user]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("updated");
-  };
-
   return (
     <>
       <Link to="/admin/userlist" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
+        {loadingUpdate && <Loading />}
+
         {isLoading ? (
           <Loading />
         ) : error ? (
@@ -74,14 +87,13 @@ const UserEditScreen = () => {
                 type="checkbox"
                 label="isAdmin"
                 checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.value)}
+                onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>
-
           </Form>
         )}
       </FormContainer>
