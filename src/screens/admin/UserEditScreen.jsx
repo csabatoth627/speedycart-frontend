@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetUserDetailsQuery } from "../../slices/userApiSlice";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
@@ -10,8 +10,8 @@ const UserEditScreen = () => {
   const { id: userId } = useParams();
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("")
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [email, setEmail] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const {
     data: user,
@@ -19,6 +19,14 @@ const UserEditScreen = () => {
     refetch,
     error,
   } = useGetUserDetailsQuery(userId);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setIsAdmin(user.isAdmin);
+    }
+  }, [user]);
 
   return (
     <>
