@@ -39,7 +39,20 @@ const UserEditScreen = () => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form></Form>
+          <Form>
+            <Form.Group controlId="name" className="my-2">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Button type="submit" variant="primary" className="my-2">
+              Update
+            </Button>
+          </Form>
         )}
       </FormContainer>
     </>
