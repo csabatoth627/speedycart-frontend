@@ -33,6 +33,15 @@ const UserEditScreen = () => {
       <Link to="/admin/userlist" className="btn btn-light my-3">
         Go Back
       </Link>
+      <FormContainer>
+        {isLoading ? (
+          <Loading />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Form></Form>
+        )}
+      </FormContainer>
     </>
   );
 };
