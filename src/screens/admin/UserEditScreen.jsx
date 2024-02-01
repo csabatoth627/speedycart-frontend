@@ -1,22 +1,28 @@
-import React from 'react'
-import { useGetUserDetailsQuery,  } from '../../slices/userApiSlice'
-import { useParams } from 'react-router-dom'
+import React from "react";
+import { useGetUserDetailsQuery } from "../../slices/userApiSlice";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import FormContainer from "../../components/FormContainer";
+import Loading from "../../components/Loading";
+import Message from "../../components/Message";
+import { Button, Form } from "react-bootstrap";
 
 const UserEditScreen = () => {
-    const {id: userId} = useParams();
+  const { id: userId } = useParams();
 
-    const {
-        data: user,
-        isLoading,
-        refetch,
-        error,
-      } = useGetUserDetailsQuery(userId);
-
-      
+  const {
+    data: user,
+    isLoading,
+    refetch,
+    error,
+  } = useGetUserDetailsQuery(userId);
 
   return (
-    <div>UserEditScreen</div>
-  )
-}
+    <>
+      <Link to="/admin/userlist" className="btn btn-light my-3">
+        Go Back
+      </Link>
+    </>
+  );
+};
 
-export default UserEditScreen
+export default UserEditScreen;
