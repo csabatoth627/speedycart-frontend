@@ -28,10 +28,10 @@ const UserEditScreen = () => {
     }
   }, [user]);
 
-  const submitHandler = (e) =>{
-    e.preventDefault()
+  const submitHandler = (e) => {
+    e.preventDefault();
     console.log("updated");
-  }
+  };
 
   return (
     <>
@@ -54,9 +54,30 @@ const UserEditScreen = () => {
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
+
+            <Form.Group controlId="email" className="my-2">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="isAdmin" className="my-2">
+              <Form.Check
+                type="checkbox"
+                label="isAdmin"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.value)}
+              ></Form.Check>
+            </Form.Group>
+
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>
+            
           </Form>
         )}
       </FormContainer>
