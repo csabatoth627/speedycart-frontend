@@ -28,6 +28,11 @@ const UserEditScreen = () => {
     }
   }, [user]);
 
+  const submitHandler = (e) =>{
+    e.preventDefault()
+    console.log("updated");
+  }
+
   return (
     <>
       <Link to="/admin/userlist" className="btn btn-light my-3">
@@ -39,7 +44,7 @@ const UserEditScreen = () => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form>
+          <Form onSubmit={submitHandler}>
             <Form.Group controlId="name" className="my-2">
               <Form.Label>Name</Form.Label>
               <Form.Control
